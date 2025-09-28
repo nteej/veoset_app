@@ -46,6 +46,13 @@ A Flutter mobile application for the VEO Asset Management System supporting role
 
 ## 🛠️ Setup Instructions
 
+### Demo Logins
+
+- VEOSet Admin admin@veoset.com / password
+- Site Manager manager@veoset.com / password
+- Technician   mike@veoset.com / password
+- Customer     customer@energycorp.com / password
+
 ### Prerequisites
 1. **Flutter SDK** (>=3.0.0)
 2. **Dart SDK** (>=3.0.0)

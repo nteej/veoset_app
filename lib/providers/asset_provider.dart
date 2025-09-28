@@ -5,10 +5,17 @@ import '../services/api_service.dart';
 import 'auth_provider.dart';
 
 final assetProvider = StateNotifierProvider<AssetNotifier, AssetState>((ref) {
-  return AssetNotifier(
+  final notifier = AssetNotifier(
     ref.read(apiServiceProvider),
     ref.read(authProvider.notifier),
   );
+  
+  // Auto-load assets when provider is first accessed
+  ref.onDispose(() {
+    // Cleanup if needed
+  });
+  
+  return notifier;
 });
 
 final assetListProvider = FutureProvider<List<Asset>>((ref) async {
@@ -18,7 +25,48 @@ final assetListProvider = FutureProvider<List<Asset>>((ref) async {
   }
 
   final assetNotifier = ref.read(assetProvider.notifier);
-  return assetNotifier.getAssets();
+  final assets = await assetNotifier.getAssets(forceRefresh: true);
+  return assets;
+});
+
+// Alternative provider that watches the state directly
+final assetListStateProvider = Provider<AsyncValue<List<Asset>>>((ref) {
+  final authState = ref.watch(authProvider);
+  final assetState = ref.watch(assetProvider);
+  
+  if (!authState.isAuthenticated) {
+    return const AsyncValue.error('Not authenticated', StackTrace.empty);
+  }
+  
+  if (assetState.isLoading) {
+    return const AsyncValue.loading();
+  }
+  
+  if (assetState.error != null) {
+    return AsyncValue.error(assetState.error!, StackTrace.empty);
+  }
+  
+  return AsyncValue.data(assetState.assets);
+});
+
+// Provider that ensures assets are loaded and provides refresh capability
+final dashboardAssetProvider = FutureProvider.autoDispose<List<Asset>>((ref) async {
+  final authState = ref.watch(authProvider);
+  if (!authState.isAuthenticated || authState.token == null) {
+    throw Exception('Not authenticated');
+  }
+
+  final assetNotifier = ref.read(assetProvider.notifier);
+  
+  // Always fetch fresh data for dashboard
+  try {
+    final assets = await assetNotifier.getAssets(forceRefresh: true);
+    return assets;
+  } catch (e) {
+    // Log error and rethrow
+    print('Error loading assets: $e');
+    rethrow;
+  }
 });
 
 final assetDetailsProvider = FutureProvider.family<Asset, int>((ref, assetId) async {
@@ -77,7 +125,17 @@ class AssetNotifier extends StateNotifier<AssetState> {
   final ApiService _apiService;
   final AuthNotifier _authNotifier;
 
-  AssetNotifier(this._apiService, this._authNotifier) : super(const AssetState());
+  AssetNotifier(this._apiService, this._authNotifier) : super(const AssetState()) {
+    // Initialize assets loading
+    _initialize();
+  }
+
+  void _initialize() async {
+    // Load assets if user is authenticated
+    if (_authNotifier.currentToken != null) {
+      await getAssets();
+    }
+  }
 
   Future<List<Asset>> getAssets({
     int? siteId,
@@ -211,7 +269,13 @@ class AssetNotifier extends StateNotifier<AssetState> {
     state = const AssetState();
   }
 
+  Future<void> refreshAssets() async {
+    await getAssets(forceRefresh: true);
+  }
+
   // Helper getters
+  List<Asset> get currentAssets => state.assets;
+  
   List<Asset> get operationalAssets =>
       state.assets.where((asset) => asset.status == 'operational').toList();
 

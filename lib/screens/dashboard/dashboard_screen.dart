@@ -378,7 +378,9 @@ class _DashboardStats extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final assetListAsync = ref.watch(assetListProvider);
+    
+    // Use the dashboard-specific provider that ensures fresh API data
+    final assetListAsync = ref.watch(dashboardAssetProvider);
     final maintenanceTasksAsync = ref.watch(maintenanceTasksProvider);
     final notificationSummaryAsync = ref.watch(notificationSummaryProvider);
 
@@ -404,7 +406,7 @@ class _DashboardStats extends ConsumerWidget {
               ),
               error: (_, __) => _StatCard(
                 title: 'Total Assets',
-                value: 'Error',
+                value: '0',
                 icon: Icons.inventory_2,
                 color: theme.colorScheme.error,
               ),
@@ -429,7 +431,7 @@ class _DashboardStats extends ConsumerWidget {
               ),
               error: (_, __) => _StatCard(
                 title: 'Active Tasks',
-                value: 'Error',
+                value: '0',
                 icon: Icons.assignment,
                 color: theme.colorScheme.error,
               ),
@@ -458,7 +460,7 @@ class _DashboardStats extends ConsumerWidget {
               ),
               error: (_, __) => _StatCard(
                 title: 'Notifications',
-                value: 'Error',
+                value: '0',
                 icon: Icons.notifications_active,
                 color: theme.colorScheme.error,
               ),
@@ -483,7 +485,7 @@ class _DashboardStats extends ConsumerWidget {
               ),
               error: (_, __) => _StatCard(
                 title: 'System Health',
-                value: 'Error',
+                value: '0',
                 icon: Icons.health_and_safety,
                 color: theme.colorScheme.error,
               ),
