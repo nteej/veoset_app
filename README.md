@@ -53,10 +53,17 @@ A Flutter mobile application for the VEO Asset Management System supporting role
 ## IOS Dashboard
 
 ![IOS Dashboard](ios-dashboard.png "IOS Dashboard")
+![Assets](ios-assets.png "Android Dashboard")
+![Maintance](ios-maintainance.png "Android Dashboard")
+![notification](ios-notification.png "Android Dashboard")
 
 ## Android Dashboard
 
 ![System Architecture](android-dashboard.jpeg "Android Dashboard")
+
+## IOS App
+
+
 
 
 ## 🛠️ Setup Instructions
