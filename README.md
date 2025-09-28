@@ -44,6 +44,11 @@ A Flutter mobile application for the VEO Asset Management System supporting role
 - **FlutterSecureStorage** for sensitive data (tokens)
 - **Hive** for local database needs
 
+## IOS 
+![System Architecture](mobile-ios.png "Mobile IOS")
+## Android
+![System Architecture](mobile-android.jpeg "Mobile Android")
+
 ## 🛠️ Setup Instructions
 
 ### Demo Logins
