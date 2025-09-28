@@ -57,7 +57,7 @@ A Flutter mobile application for the VEO Asset Management System supporting role
 1. **Flutter SDK** (>=3.0.0)
 2. **Dart SDK** (>=3.0.0)
 3. **Android Studio** / **Xcode** for device testing
-4. **Laravel Backend** running on localhost:8000
+4. **Laravel Backend** running on [https://smartforce.fi](https://smartforce.fi/)
 
 ### Installation
 
@@ -97,7 +97,7 @@ cd /Users/core/Documents/work/veoset
 php artisan serve
 ```
 
-The mobile app will connect to `http://localhost:8000/api`
+The mobile app will connect to `https://smartforce.fi/api`
 
 ## 📱 Development Guide
 
@@ -218,7 +218,7 @@ flutter test integration_test/
 
 ## 📊 API Documentation
 
-API documentation is available at: `http://localhost:8000/api/documentation`
+API documentation is available at: `hhttps://smartforce.fi/api/documentation`
 
 ### Key Endpoints
 
@@ -305,9 +305,9 @@ flutter run --debug
    ```
 
 2. **API Connection Issues**
-   - Ensure backend is running on `localhost:8000`
+   - Ensure backend is running on `https://smartforce.fi`
    - Check network permissions in `android/app/src/main/AndroidManifest.xml`
-   - For iOS simulator, use `127.0.0.1` instead of `localhost`
+   - For iOS simulator, use `https://smartforce.fi/api`
 
 3. **Code Generation Issues**
    ```bash
