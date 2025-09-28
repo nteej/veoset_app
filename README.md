@@ -45,9 +45,19 @@ A Flutter mobile application for the VEO Asset Management System supporting role
 - **Hive** for local database needs
 
 ## IOS 
-![System Architecture](mobile-ios.png "Mobile IOS")
+![Mobile IOS](mobile-ios.png "Mobile IOS")
+
 ## Android
-![System Architecture](mobile-android.jpeg "Mobile Android")
+![Mobile Android](mobile-android.jpeg "Mobile Android")
+
+## IOS Dashboard
+
+![IOS Dashboard](ios-dashboard.png "IOS Dashboard")
+
+## Android Dashboard
+
+![System Architecture](android-dashboard.jpeg "Android Dashboard")
+
 
 ## 🛠️ Setup Instructions
 
